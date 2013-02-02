@@ -1,0 +1,10 @@
+target/
+/logs
+/.classpath
+/.project
+/.settings
+/persistence-db
+*.log
+*~
+.DS_Store
+

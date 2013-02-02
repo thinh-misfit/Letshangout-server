@@ -1,0 +1,315 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+	<groupId>com.misfitwearables</groupId>
+	<artifactId>letshangoutserver</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>letshangoutserver</name>
+	<url>http://www.misfitwearables.com</url>
+
+	<profiles>
+		<profile>
+			<id>localhost</id>
+			<properties>
+				<url>http://localhost:8080/manager</url>
+				<username>ta</username>
+				<password>ta</password>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+
+	</profiles>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<output_directory>target</output_directory>
+	</properties>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>Codehaus Snapshots</id>
+			<url>https://nexus.codehaus.org/content/repositories/codehaus-snapshots
+			</url>
+		</pluginRepository>
+
+	</pluginRepositories>
+
+	<repositories>
+	     <repository>                                               
+			<id>morphia.repository</id>      
+			<name>morphia</name>                      
+			<url>http://morphia.googlecode.com/svn/mavenrepo/</url>
+		</repository>   
+	  	<repository>
+	  	    <id>java.net2</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</repository> 
+		
+		<repository>
+			<id>javax.persistence</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</repository>
+
+
+		<repository>
+			<id>maven2-repository.java.net</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>maven-repository.java.net</id>
+			<name>Java.net Maven 1 Repository</name>
+			<url>http://download.java.net/maven/1</url>
+			<layout>legacy</layout>
+		</repository>
+
+		<repository>
+			<id>org.codehaus.mojo</id>
+			<name>Mojo Repository</name>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<layout>legacy</layout>
+		</repository>
+	</repositories>
+
+	
+	<build>
+		<plugins>
+
+
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.0.5</version>
+				<configuration>
+					<container>
+						<containerId>jetty7x</containerId>
+						<type>remote</type>
+					</container>
+					<configuration>
+						<type>runtime</type>
+						<properties>
+							<cargo.hostname>tds.spotify.net</cargo.hostname>
+							<cargo.servlet.port>8081</cargo.servlet.port>
+							<cargo.logging>high</cargo.logging>
+						</properties>
+					</configuration>
+					<deployer>
+						<type>remote</type>
+						<deployables>
+							<deployable>
+								<groupId>com.spotify.qa</groupId>
+								<type>war</type>
+								<artifactId>testdataservice2</artifactId>
+								<properties>
+									<context>/testdataservice2</context>
+								</properties>
+							</deployable>
+						</deployables>
+					</deployer>
+				</configuration>
+			</plugin>
+
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+
+				<configuration>
+
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat6-maven-plugin</artifactId>
+				<version>2.0-SNAPSHOT</version>
+				<configuration>
+					<url>${url}</url>
+					<username>${username}</username>
+					<password>${password}</password>
+					<update>true</update>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<warFile>target/letshangoutserver.war</warFile>
+
+					<url>${url}</url>
+					<username>${username}</username>
+					<password>${password}</password>
+					<update>true</update>
+				</configuration>
+			</plugin>
+
+
+		</plugins>
+
+	</build>
+	
+	   
+	<dependencies>
+
+	
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-apache-client</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-servlet</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-fastinfoset</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.misfit.ta</groupId>
+			<artifactId>tools</artifactId>
+			<version>0.0.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+		
+		<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+		<version>1.8.5</version>
+	</dependency>
+		
+		<!-- <dependency>
+    		<groupId>org.swinglabs</groupId>
+    		<artifactId>swingx</artifactId>
+    	<version>0.9.2</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/swingx-0.9.3.jar</systemPath>
+</dependency> -->
+		
+	<!-- 	<dependency>
+			<groupId>com.google.code.morphia</groupId>
+			<artifactId>morphia</artifactId>
+			<version>0.98</version>
+			<scope>system</scope>
+    		<systemPath>${project.basedir}/libs/morphia-0.98.jar</systemPath>
+			
+		</dependency>	  -->
+			
+	 	<!-- <dependency>
+        	<groupId>cglib</groupId>
+        	<artifactId>cglib-nodep</artifactId>
+        	<version>[2.1_3,)</version>
+        	<type>jar</type>
+        	<optional>true</optional>
+		</dependency>
+		<dependency>
+        	<groupId>com.thoughtworks.proxytoys</groupId>
+        	<artifactId>proxytoys</artifactId>
+        	<version>1.0</version>
+        	<type>jar</type>
+        	<optional>true</optional>
+
+</dependency> -->
+		
+ 
+	
+	</dependencies>
+
+
+</project>
