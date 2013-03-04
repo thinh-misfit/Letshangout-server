@@ -1,6 +1,6 @@
-package com.misfitwearables.letshangout.checkin;
+package com.misfitwearables.foodcompare.data;
 
-import com.misfitwearables.letshangout.checkin.data.Place;
+import com.misfitwearables.letshangout.data.entries.Place;
 
 public class CheckInEntry {
     

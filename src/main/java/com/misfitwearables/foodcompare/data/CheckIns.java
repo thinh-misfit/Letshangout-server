@@ -1,4 +1,4 @@
-package com.misfitwearables.letshangout.checkin;
+package com.misfitwearables.foodcompare.data;
 
 import java.util.Vector;
 
